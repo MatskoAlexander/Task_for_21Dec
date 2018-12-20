@@ -1,74 +1,69 @@
 import string
 
-en_low = string.ascii_lowercase
-en_up = string.ascii_uppercase
-rus_low = 'абвгдеёжзийклмнопрстуфхцчшщьыъэюя'
-rus_up = rus_low.upper()
-counter1 = 0
-counter2 = 0
-
 try:
-    with open('Text.txt', 'r') as text:
-        text = text.read()
+    def encode(shift, Text):
+        for num_lang in languages:
+            lang = num_lang
+            for counter1 in range(len(Text)):
+                for counter2 in range(len(lang)):
+                    if Text[counter1] == lang[counter2]:
+                        num_s = counter2 + shift - ((counter2 + shift) // len(lang)) * len(lang)
+                        Text = Text[0:counter1] + lang[num_s] + Text[counter1 + 1:]
+                        break
+        print(Text)
+
+    def decode(shift, Text):
+        for num_lang in languages:
+            lang = num_lang
+            for counter1 in range(len(Text)):
+                for counter2 in range(len(lang)):
+                    if Text[counter1] == lang[counter2]:
+                        num_s = counter2 - shift + shift // len(lang) * len(lang)
+                        Text = Text[0:counter1] + lang[num_s] + Text[counter1 + 1:]
+                        break
+        print(Text)
+
+
+    languages = [string.ascii_lowercase, string.ascii_uppercase, 'абвгдеёжзийклмнопрстуфхцчшщьыъэюя',
+                 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ']
     while True:
+        with open('Text.txt', 'r') as text:
+            text = text.read()
         answer = input('\nWhat do you want to do? / Что вы хотите сделать?\n1)Encode / Закодировать\n2)Decode / '
-                   'Раскодировать\n3)End program / Завершить программу\n')
+                   'Раскодировать\n3)Add language / Добавить язык\n4)Show alphabet list / Показать список алфавитов\n'
+                       '5)End program / Завершить программу\n')
         if answer == '1' or answer.lower() == 'encode' or answer.lower() == 'закодировать':
             k = 'k'
             while k.isdigit() != True:
                 k = input('Enter shift (integer) / Введите сдвиг (целое число): ')
             k = int(k)
-            for counter1 in range(len(text)):
-                for counter2 in range(len(en_low)):
-                    if text[counter1] == en_low[counter2]:
-                        num_s_en = counter2 + k - ((counter2 + k) // len(en_low)) * len(en_low)
-                        text = text[0:counter1] + en_low[num_s_en] + text[counter1 + 1:]
-                        break
-                for counter2 in range(len(en_up)):
-                    if text[counter1] == en_up[counter2]:
-                        num_s_en = counter2 + k - ((counter2 + k) // len(en_up)) * len(en_up)
-                        text = text[0:counter1] + en_up[num_s_en] + text[counter1 + 1:]
-                        break
-                for counter2 in range(len(rus_low)):
-                    if text[counter1] == rus_low[counter2]:
-                        num_s_rus = counter2 + k - ((counter2 + k) // len(rus_low)) * len(rus_low)
-                        text = text[0:counter1] + rus_low[num_s_rus] + text[counter1 + 1:]
-                        break
-                for counter2 in range(len(rus_up)):
-                    if text[counter1] == rus_up[counter2]:
-                        num_s_rus = counter2 + k - ((counter2 + k) // len(rus_up)) * len(rus_up)
-                        text = text[:counter1] + rus_up[num_s_rus] + text[counter1 + 1:]
-                        break
-            print(text)
+            encode(k, text)
         elif answer == '2' or answer.lower() == 'decode' or answer.lower() == 'раскодировать':
             k = 'k'
             while k.isdigit() != True:
                 k = input('Enter shift (integer) / Введите сдвиг (целое число): ')
             k = int(k)
-            for counter1 in range(len(text)):
-                for counter2 in range(len(en_low)):
-                    if text[counter1] == en_low[counter2]:
-                        num_s_en = counter2 - k + k // len(en_low) * len(en_low)
-                        text = text[0:counter1] + en_low[num_s_en] + text[counter1 + 1:]
-                        break
-                for counter2 in range(len(en_up)):
-                    if text[counter1] == en_up[counter2]:
-                        num_s_en = counter2 - k + k // len(en_up) * len(en_up)
-                        text = text[0:counter1] + en_up[num_s_en] + text[counter1 + 1:]
-                        break
-                for counter2 in range(len(rus_low)):
-                    if text[counter1] == rus_low[counter2]:
-                        num_s_rus = counter2 - k + k // len(rus_up) * len(rus_up)
-                        text = text[0:counter1] + rus_low[num_s_rus] + text[counter1 + 1:]
-                        break
-                for counter2 in range(len(rus_up)):
-                    if text[counter1] == rus_up[counter2]:
-                        num_s_rus = counter2 - k + k // len(rus_up) * len(rus_up)
-                        text = text[0:counter1] + rus_up[num_s_rus] + text[counter1 + 1:]
-                        break
-            print(text)
-        elif answer == '3' or answer.lower() == 'end program' or answer.lower() == 'завершить программу':
+            decode(k, text)
+        elif answer == '3' or answer.lower() == 'add language' or answer.lower() == 'добавить язык':
+            answer2 = input('In the initial version of the program there are 2 languages: English and Russian. '
+                            'Want to add something? /\nВ изначальной версии программы есть 2 языка: английский и '
+                            'русский. Хотите что-то добавить?\n1)Yes / Да\n2)No / Нет\n')
+            if answer2 == '1' or answer2.lower() == 'yes' or answer2.lower() == 'да':
+                print('Enter alphabet / Введите алфавит:')
+                new_alphabet = str(input().lower())
+                if new_alphabet != new_alphabet.upper():
+                    new_list = [new_alphabet, new_alphabet.upper()]
+                else:
+                    new_list = [new_alphabet]
+                languages.extend(new_list)
+            elif answer2 == '2' or answer2.lower() == 'no' or answer2.lower() == 'нет':
+                pass
+        elif answer == '4' or answer.lower() == 'show alphabet list' or answer.lower() == 'показать список алфавитов':
+            print(languages)
+        elif answer == '5' or answer.lower() == 'end program' or answer.lower() == 'завершить программу':
             break
+        else:
+            print('Repeat input / Повторите ввод')
 except FileNotFoundError:
     print('Ошибка! Файл не найден. Пожалуйста, создайте файл Text.txt в папке с программой.\nПеред запуском программы'
           ' убедитесь, что вы сохранили файл, иначе программа будет использовать последнюю сохранённую копию файла.')
