@@ -40,54 +40,33 @@ try:
                         text = text[:counter1] + rus_up[num_s_rus] + text[counter1 + 1:]
                         break
             print(text)
-
-
         elif answer == '2' or answer.lower() == 'decode' or answer.lower() == 'раскодировать':
-            while True:
-                ch_lang = input('\nWhat language do we translate? / На какой язык переводим?\n1)English\n2)Русский\n'
-                                '3)End program / Завершить программу\n')
-
-                if ch_lang == '1' or ch_lang.lower() == 'english':
-                    k = 'k'
-                    while k.isdigit() != True:
-                        k = input('Enter shift (integer): ')
-                    k = int(k)
-                    for counter1 in range(len(text)):
-                        for counter2 in range(len(en_low)):
-                            if text[counter1] == en_low[counter2]:
-                                num_s_en = counter2 - k + k // len(en_low) * len(en_low)
-                                text = text[0:counter1] + en_low[num_s_en] + text[counter1 + 1:]
-                                break
-                        for counter2 in range(len(en_up)):
-                            if text[counter1] == en_up[counter2]:
-                                num_s_en = counter2 - k + k // len(en_up) * len(en_up)
-                                text = text[0:counter1] + en_up[num_s_en] + text[counter1 + 1:]
-                                break
-                    print(text)
-
-                elif ch_lang == '2' or ch_lang.lower() == 'русский':
-                    k = 'k'
-                    while k.isdigit() != True:
-                        k = input('Введите сдвиг (целое число): ')
-                    k = int(k)
-                    for counter1 in range(len(text)):
-                        for counter2 in range(len(rus_low)):
-                            if text[counter1] == rus_low[counter2]:
-                                num_s_rus = counter2 - k + k // len(rus_up) * len(rus_up)
-                                text = text[0:counter1] + rus_low[num_s_rus] + text[counter1 + 1:]
-                                break
-                        for counter2 in range(len(rus_up)):
-                            if text[counter1] == rus_up[counter2]:
-                                num_s_rus = counter2 - k + k // len(rus_up) * len(rus_up)
-                                text = text[0:counter1] + rus_up[num_s_rus] + text[counter1 + 1:]
-                                break
-                    print(text)
-
-                elif answer == '3' or answer.lower() == 'end program' or answer.lower() == 'завершить программу':
-                    break
-                break
-
-
+            k = 'k'
+            while k.isdigit() != True:
+                k = input('Enter shift (integer) / Введите сдвиг (целое число): ')
+            k = int(k)
+            for counter1 in range(len(text)):
+                for counter2 in range(len(en_low)):
+                    if text[counter1] == en_low[counter2]:
+                        num_s_en = counter2 - k + k // len(en_low) * len(en_low)
+                        text = text[0:counter1] + en_low[num_s_en] + text[counter1 + 1:]
+                        break
+                for counter2 in range(len(en_up)):
+                    if text[counter1] == en_up[counter2]:
+                        num_s_en = counter2 - k + k // len(en_up) * len(en_up)
+                        text = text[0:counter1] + en_up[num_s_en] + text[counter1 + 1:]
+                        break
+                for counter2 in range(len(rus_low)):
+                    if text[counter1] == rus_low[counter2]:
+                        num_s_rus = counter2 - k + k // len(rus_up) * len(rus_up)
+                        text = text[0:counter1] + rus_low[num_s_rus] + text[counter1 + 1:]
+                        break
+                for counter2 in range(len(rus_up)):
+                    if text[counter1] == rus_up[counter2]:
+                        num_s_rus = counter2 - k + k // len(rus_up) * len(rus_up)
+                        text = text[0:counter1] + rus_up[num_s_rus] + text[counter1 + 1:]
+                        break
+            print(text)
         elif answer == '3' or answer.lower() == 'end program' or answer.lower() == 'завершить программу':
             break
 except FileNotFoundError:
