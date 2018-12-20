@@ -56,8 +56,6 @@ try:
                 else:
                     new_list = [new_alphabet]
                 languages.extend(new_list)
-            elif answer2 == '2' or answer2.lower() == 'no' or answer2.lower() == 'нет':
-                pass
         elif answer == '4' or answer.lower() == 'show alphabet list' or answer.lower() == 'показать список алфавитов':
             print(languages)
         elif answer == '5' or answer.lower() == 'end program' or answer.lower() == 'завершить программу':
